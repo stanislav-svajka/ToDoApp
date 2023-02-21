@@ -14,6 +14,7 @@ namespace ToDoAppBE.DependencyInjection
             IWebHostEnvironment environment)
         {
             AddDatabase(services, configuration);
+            AddServices(services);
             return services;
         }
 
