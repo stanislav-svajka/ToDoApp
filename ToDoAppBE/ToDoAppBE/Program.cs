@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ToDoAppBE.Database;
 using ToDoAppBE.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,5 +61,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<ApplicationContext>();
+await db.Database.MigrateAsync();
 
 app.Run();
