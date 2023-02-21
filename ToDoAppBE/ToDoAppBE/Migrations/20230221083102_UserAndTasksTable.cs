@@ -7,18 +7,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToDoAppBE.Migrations
 {
     /// <inheritdoc />
-    public partial class ListTasks : Migration
+    public partial class UserAndTasksTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
-                name: "TaskEntity",
+                name: "Users",
                 columns: table => new
                 {
-                    TaskId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TaskGuid = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Username = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PasswordHash = table.Column<byte[]>(type: "longblob", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "longblob", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ExpirationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: false)
@@ -32,9 +51,9 @@ namespace ToDoAppBE.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskEntity", x => x.TaskId);
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TaskEntity_Users_UserEntityId",
+                        name: "FK_Tasks_Users_UserEntityId",
                         column: x => x.UserEntityId,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -42,8 +61,8 @@ namespace ToDoAppBE.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskEntity_UserEntityId",
-                table: "TaskEntity",
+                name: "IX_Tasks_UserEntityId",
+                table: "Tasks",
                 column: "UserEntityId");
         }
 
@@ -51,7 +70,10 @@ namespace ToDoAppBE.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TaskEntity");
+                name: "Tasks");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

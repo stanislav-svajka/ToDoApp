@@ -11,8 +11,8 @@ using ToDoAppBE.Database;
 namespace ToDoAppBE.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230220145050_ListTasks")]
-    partial class ListTasks
+    [Migration("20230221083102_UserAndTasksTable")]
+    partial class UserAndTasksTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ToDoAppBE.Migrations
 
             modelBuilder.Entity("ToDoAppBE.Entities.TaskEntity", b =>
                 {
-                    b.Property<int>("TaskId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -42,9 +42,6 @@ namespace ToDoAppBE.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("TaskGuid")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -55,11 +52,11 @@ namespace ToDoAppBE.Migrations
                     b.Property<bool>("isCompleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.HasKey("TaskId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserEntityId");
 
-                    b.ToTable("TaskEntity");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("ToDoAppBE.Entities.UserEntity", b =>
@@ -67,18 +64,6 @@ namespace ToDoAppBE.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -88,8 +73,9 @@ namespace ToDoAppBE.Migrations
                         .IsRequired()
                         .HasColumnType("longblob");
 
-                    b.Property<Guid>("UserGuid")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

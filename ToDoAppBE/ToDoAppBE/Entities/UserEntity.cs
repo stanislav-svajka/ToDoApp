@@ -6,19 +6,10 @@ public class UserEntity
 {
     [Key]
     public int Id { get; set; }
-    
+
     [Required]
-    public Guid UserGuid { get; set; }
-    
-    [Required]
-    public string FirstName { get; set; } = string.Empty;
-    
-    [Required]
-    public string LastName { get; set; } = string.Empty;
-    
-    [Required]
-    public string Email { get; set; } = string.Empty;
-    
+    public string Username { get; set; } = string.Empty;
+
     [Required]
     public byte[] PasswordHash { get; set; } = new byte[0];
     

@@ -9,7 +9,7 @@ public class ApplicationContext :DbContext
         : base(options)
     { }
 
-    private DbSet<UserEntity> Users { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
     
-    private DbSet<TaskEntity> Tasks { get; set; }
+    public DbSet<TaskEntity> Tasks { get; set; }
 }
