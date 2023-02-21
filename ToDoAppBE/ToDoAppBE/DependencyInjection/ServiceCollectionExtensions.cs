@@ -1,7 +1,10 @@
 ﻿using System.Text;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ToDoAppBE.Database;
+using ToDoAppBE.Services;
+using ToDoAppBE.Services.Interfaces;
 
 
 namespace ToDoAppBE.DependencyInjection
@@ -15,12 +18,36 @@ namespace ToDoAppBE.DependencyInjection
         {
             AddDatabase(services, configuration);
             AddServices(services);
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Token:Key").Value)),
+                        ValidIssuer = configuration.GetSection("Token:Issuer").Value,
+                        ValidateIssuer = true,
+                        ValidateAudience = false
+                    };
+                });
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CorsPolicy",
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:4200", "http://localhost:4200","http://localhost:7044")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             return services;
         }
 
         private static void AddServices(IServiceCollection services)
         {
-            
+            services.AddTransient<IUserService, UserService>();
         }
 
         #region Infrastructure
