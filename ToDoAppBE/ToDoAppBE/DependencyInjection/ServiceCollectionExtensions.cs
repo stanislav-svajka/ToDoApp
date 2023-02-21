@@ -37,7 +37,7 @@ namespace ToDoAppBE.DependencyInjection
                 options.AddPolicy(name: "CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:4200", "http://localhost:4200","http://localhost:7044")
+                        builder.WithOrigins("https://localhost:4200", "http://localhost:4200")
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
