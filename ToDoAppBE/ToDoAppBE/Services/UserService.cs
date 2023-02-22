@@ -67,7 +67,21 @@ public class UserService : IUserService
 
         return true;
     }
-    
+
+    public async Task<int> GetUserIdByName(string username)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+        
+        if (user == null)
+        {
+            throw new Exception("User not exist");
+        }
+        
+        var userId = user.Id;
+        
+        return userId;
+    }
+
     private void CreatePasswordHash( string password, out byte[] passwordHash, out byte[] passwordSalt)
     {
         using (var hmac = new System.Security.Cryptography.HMACSHA512())

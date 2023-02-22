@@ -2,6 +2,7 @@
 using ToDoAppBE.Database;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Model;
 using ToDoAppBE.Services.Interfaces;
 
 namespace ToDoAppBE.Services;
@@ -75,25 +76,24 @@ public class TaskService : ITaskService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> CreateAsync(TaskDto taskDto)
+    public async Task<bool> CreateAsync(TaskModel taskModel)
     {
-        if (await _context.Tasks.AnyAsync(x => x.Title == taskDto.Title))
+        if (await _context.Tasks.AnyAsync(x => x.Title == taskModel.Title))
         {
-            throw new Exception($"Product with name {taskDto.Title} already exists");
+            throw new Exception($"Product with name {taskModel.Title} already exists");
         }
 
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskDto.UserId);
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskModel.UserId);
         
         
         var task = new TaskEntity
         {
-            Id = taskDto.Id,
-            ExpirationTime = taskDto.Expirationtime,
-            Description = taskDto.Description,
-            Group = taskDto.Group,
-            //UserEntiy
-            isCompleted = taskDto.isCompleted,
-            Title = taskDto.Title,
+            //Id = taskModel.Id,
+            //ExpirationTime = taskModel.Expirationtime,
+            Description = taskModel.Description,
+            Group = taskModel.Group,
+            isCompleted = taskModel.isCompleted,
+            Title = taskModel.Title,
             UserEntity = user,
         };
 
@@ -104,14 +104,14 @@ public class TaskService : ITaskService
 
     public async Task<bool> UpdateAsync(TaskDto taskDto)
     {
-        var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskDto.Id);
+        var task = await _context.Tasks.FirstOrDefaultAsync(x => x.UserEntity.Id == taskDto.UserId);
 
         if (task == null)
         {
             throw new Exception("Empty");
         }
 
-        if (await  _context.Tasks.AnyAsync(x=>x.Title == taskDto.Title && x.Id != taskDto.Id))
+        if (await  _context.Tasks.AnyAsync(x=>x.Title == taskDto.Title && x.Id != taskDto.UserId))
         {
             throw new Exception("Already exist !");
         }

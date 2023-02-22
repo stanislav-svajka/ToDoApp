@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Model;
 using ToDoAppBE.Services.Interfaces;
 
 namespace ToDoAppBE.Controllers;
@@ -74,10 +75,10 @@ public class TaskController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateAsync(
-        [Required, FromBody, Bind] TaskDto taskDto
+        [Required, FromBody, Bind] TaskModel taskModel
     )
     {
-        var task = await _taskService.CreateAsync(taskDto);
+        var task = await _taskService.CreateAsync(taskModel);
         return Ok(task);
     }
 

@@ -1,5 +1,6 @@
 ﻿using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Model;
 
 namespace ToDoAppBE.Services.Interfaces;
 
@@ -13,7 +14,7 @@ public interface ITaskService
 
     Task DeleteByIdAsync(int id);
 
-    Task<bool> CreateAsync(TaskDto taskDto);
+    Task<bool> CreateAsync(TaskModel taskModel);
 
     Task<bool> UpdateAsync(TaskDto taskDto);
 }
