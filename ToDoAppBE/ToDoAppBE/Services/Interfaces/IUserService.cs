@@ -9,4 +9,6 @@ public interface IUserService
     Task<string> Login(string username, string password);
 
     Task<bool> UserExist(string username);
+
+    Task<int> GetUserIdByName(string username);
 }
