@@ -25,6 +25,7 @@ export class LoginComponent{
     this.loginService.login(obj).subscribe(token => {
       if(token){
         localStorage.setItem('token',token)
+        localStorage.setItem('username',obj.username)
         console.log('dobre')
         this.router.navigateByUrl("todo")
       }

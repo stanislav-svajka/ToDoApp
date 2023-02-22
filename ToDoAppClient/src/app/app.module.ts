@@ -15,6 +15,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatInputModule,
     MatIconModule,
     BrowserAnimationsModule,
+    MatIconModule,
     AppRoutingModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
