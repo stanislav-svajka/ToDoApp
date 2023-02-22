@@ -82,19 +82,19 @@ public class TaskService : ITaskService
             throw new Exception($"Product with name {taskDto.Title} already exists");
         }
 
-        var user = _context.Users.Include(x => x.Tasks);
-        
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskDto.UserId);
         
         
         var task = new TaskEntity
         {
-            CreatedTime = taskDto.CreatedTime,
+            Id = taskDto.Id,
             ExpirationTime = taskDto.Expirationtime,
             Description = taskDto.Description,
             Group = taskDto.Group,
             //UserEntiy
             isCompleted = taskDto.isCompleted,
             Title = taskDto.Title,
+            UserEntity = user,
         };
 
         await _context.Tasks.AddAsync(task);

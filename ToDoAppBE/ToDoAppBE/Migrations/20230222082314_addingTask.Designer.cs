@@ -11,8 +11,8 @@ using ToDoAppBE.Database;
 namespace ToDoAppBE.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230221155943_addingPublisher")]
-    partial class addingPublisher
+    [Migration("20230222082314_addingTask")]
+    partial class addingTask
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
