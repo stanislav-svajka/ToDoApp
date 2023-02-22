@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
@@ -62,5 +63,15 @@ public class UserController :ControllerBase
     public async Task<IActionResult> TestAuth()
     {
         return Ok("si frajer");
+    }
+
+
+    [HttpGet("userid/{username}")]
+    public async Task<IActionResult> GetUserIdByName(
+        [Required, FromRoute(Name = "username")] string username
+    )
+    {
+        var userId = await _userService.GetUserIdByName(username);
+        return Ok(userId);
     }
 }
