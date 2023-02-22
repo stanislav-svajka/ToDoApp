@@ -43,7 +43,7 @@ namespace ToDoAppBE.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UserEntityId")
+                    b.Property<int>("UserEntityId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isCompleted")
@@ -81,9 +81,13 @@ namespace ToDoAppBE.Migrations
 
             modelBuilder.Entity("ToDoAppBE.Entities.TaskEntity", b =>
                 {
-                    b.HasOne("ToDoAppBE.Entities.UserEntity", null)
+                    b.HasOne("ToDoAppBE.Entities.UserEntity", "UserEntity")
                         .WithMany("Tasks")
-                        .HasForeignKey("UserEntityId");
+                        .HasForeignKey("UserEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserEntity");
                 });
 
             modelBuilder.Entity("ToDoAppBE.Entities.UserEntity", b =>
