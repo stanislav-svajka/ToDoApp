@@ -48,6 +48,7 @@ namespace ToDoAppBE.DependencyInjection
         private static void AddServices(IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITaskService, TaskService>();
         }
 
         #region Infrastructure

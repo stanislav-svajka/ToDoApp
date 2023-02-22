@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ToDoAppBE.Migrations
 {
     /// <inheritdoc />
-    public partial class UserAndTasksTable : Migration
+    public partial class addingTask : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,6 +38,7 @@ namespace ToDoAppBE.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserEntityId = table.Column<int>(type: "int", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ExpirationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Description = table.Column<string>(type: "longtext", nullable: false)
@@ -46,8 +47,7 @@ namespace ToDoAppBE.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     isCompleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Group = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserEntityId = table.Column<int>(type: "int", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -56,7 +56,8 @@ namespace ToDoAppBE.Migrations
                         name: "FK_Tasks_Users_UserEntityId",
                         column: x => x.UserEntityId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

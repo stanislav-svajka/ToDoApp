@@ -1,13 +1,23 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using ToDoAppBE.Database;
 using ToDoAppBE.DependencyInjection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddServer(new OpenApiServer
@@ -59,5 +69,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<ApplicationContext>();
+await db.Database.MigrateAsync();
 
 app.Run();
