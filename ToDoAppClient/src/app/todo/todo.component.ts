@@ -3,6 +3,7 @@ import {ITask} from "../../models/ITask";
 import {TaskService} from "../../services/task.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EditTaskComponent} from "../edit-task/edit-task.component";
+import {MessageService} from "../../services/message.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class TodoComponent implements OnInit{
   username: string = '';
   userId: number = 0
 
-  constructor(private taskService: TaskService, private dialog:MatDialog) {
+  constructor(private taskService: TaskService, private dialog:MatDialog,private message:MessageService) {
   }
 
   openDialog(etask:ITask)
@@ -45,6 +46,7 @@ export class TodoComponent implements OnInit{
       this.getAllTasks()
       this.taskObj.title=""
       this.taskObj.description=""
+      this.message.successMessage("Task successfully added")
     })
   }
 
@@ -69,6 +71,7 @@ export class TodoComponent implements OnInit{
     console.log(etask)
     this.taskService.removeTask(etask).subscribe(()=>{
       this.getAllTasks()
+      this.message.successMessage("Task successfully removed")
     })
   }
 

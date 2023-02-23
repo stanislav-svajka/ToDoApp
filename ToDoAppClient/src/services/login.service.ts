@@ -16,8 +16,16 @@ export class LoginService {
     return this.http.post<string>('https://localhost:5001/api/user/login', login)
   }
 
+  register(login:ILoginForm){
+    return this.http.post<string>('https://localhost:5001/api/user/register', login)
+  }
+
   logout(){
     localStorage.removeItem("token")
+  }
+
+  isLoggedIn() {
+    return !!localStorage.getItem('token')
   }
 
 
