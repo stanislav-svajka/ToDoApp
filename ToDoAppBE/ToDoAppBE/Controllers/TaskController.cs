@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
@@ -19,6 +20,7 @@ public class TaskController : ControllerBase
     }
 
 
+    [Authorize]
     [HttpGet] //WORK ??
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -30,7 +32,7 @@ public class TaskController : ControllerBase
     }
     
     
-
+    [Authorize]
     [HttpGet("group/{group}")] //WORK
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,7 +45,7 @@ public class TaskController : ControllerBase
         return Ok(tasks);
     }
     
-    
+    [Authorize]
     [HttpGet("user/{username}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,7 +58,7 @@ public class TaskController : ControllerBase
         return Ok(tasks);
     }
 
-
+    [Authorize]
     [HttpDelete("{task_id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,7 +71,7 @@ public class TaskController : ControllerBase
         return Ok("delete successful");
     }
 
-
+    [Authorize]
     [HttpPost] // WORK
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -82,7 +84,7 @@ public class TaskController : ControllerBase
         return Ok(task);
     }
 
-
+    [Authorize]
     [HttpPut("{task_id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
