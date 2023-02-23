@@ -102,9 +102,9 @@ public class TaskService : ITaskService
         return true;
     }
 
-    public async Task<bool> UpdateAsync(TaskDto taskDto)
+    public async Task<bool> UpdateAsync( int taskId ,TaskDto taskDto)
     {
-        var task = await _context.Tasks.FirstOrDefaultAsync(x => x.UserEntity.Id == taskDto.UserId);
+        var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
 
         if (task == null)
         {
@@ -116,6 +116,8 @@ public class TaskService : ITaskService
             throw new Exception("Already exist !");
         }
 
+        //task.Id = taskDto.Id;
+        task.Title = taskDto.Title;
         task.Description = taskDto.Description;
         task.Group = taskDto.Group;
         task.isCompleted = taskDto.isCompleted;
