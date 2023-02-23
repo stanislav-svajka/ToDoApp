@@ -1,16 +1,16 @@
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand"   href="home"> <b>ToDoApplication</b></a>
+    <a class="navbar-brand px-3"    href="home"> <b>ToDoApplication</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
 
-        <li class="nav-item" *ngIf="isLoggedIn">
+        <li class="nav-item" *ngIf="this.loginService.isLoggedIn()">
           <a class="nav-link" routerLink="todo">MyToDo</a>
         </li>
-        <li class="nav-item" (click)="logout()" *ngIf="isLoggedIn">
+        <li class="nav-item" (click)="logout()" *ngIf="this.loginService.isLoggedIn()">
           <a class="nav-link" href="#">Logout</a>
         </li>
 

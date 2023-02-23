@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ITask} from "../../models/ITask";
 import {TaskService} from "../../services/task.service";
+import {MatDialog} from "@angular/material/dialog";
+import {EditTaskComponent} from "../edit-task/edit-task.component";
+import {MessageService} from "../../services/message.service";
 
 
 @Component({
@@ -15,17 +18,41 @@ export class TodoComponent implements OnInit{
   username: string = '';
   userId: number = 0
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private dialog:MatDialog,private message:MessageService) {
+  }
+
+  openDialog(etask:ITask)
+  {
+    let dialogRef = this.dialog.open(EditTaskComponent, {
+      height: '400px',
+      width: '600px',
+      data:{
+        etask:{
+          title:etask.title,
+          description:etask.description,
+          id:etask.id
+        }
+      }
+    });
+    dialogRef.afterClosed().subscribe(()=>{
+      this.getAllTasks()
+    })
   }
 
   addTask(etask:ITask){
     this.taskObj.username=this.username
-    etask.group='dsdsds'
-    etask.isCompleted=false
+    etask.group='work'
+    etask.isCompleted=true
     etask.userId=this.userId
+    if(etask.title===this.taskObj.title){
+      this.message.errorMessage("This task already exists")
+    }
     this.taskService.addTask(etask).subscribe((res: any)=>{
       console.log(res)
       this.getAllTasks()
+      this.taskObj.title=""
+      this.taskObj.description=""
+      this.message.successMessage("Task successfully added")
     })
   }
 
@@ -50,6 +77,7 @@ export class TodoComponent implements OnInit{
     console.log(etask)
     this.taskService.removeTask(etask).subscribe(()=>{
       this.getAllTasks()
+      this.message.successMessage("Task successfully removed")
     })
   }
 

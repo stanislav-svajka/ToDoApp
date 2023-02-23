@@ -1,0 +1,31 @@
+<div class=" h-96 min-vh-100">
+  <h1 class="text-6xl font-bold text-center m-3" >Welcome to your To Do list</h1>
+  <h2 class="text-6xl font-bold text-center m-3"> App where you can write your tasks</h2>
+  <p class="text-6xl font-bold text-center m-5">
+    To-do lists are a list of tasks that an individual needs to complete or accomplish. <br>
+    Tasks are typically put in order by priority or importance.<br>
+    A to-do list can be written on a piece of paper or by utilizing task management software.<br>
+  </p>
+
+
+<div class="form w-25 mx-auto mt-5" >
+  <div class="form-group text-center">
+    <label for="exampleInputUsername">Username</label>
+    <input ngDefaultControl name="username" matInput [formControl]="usernameForm" required [(ngModel)]="username" type="text" class="form-control" id="exampleInputUsername" aria-describedby="username" placeholder="Username" >
+    <mat-error *ngIf="usernameForm.invalid && usernameForm.touched">{{getErrorMessage()}}</mat-error>
+  </div>
+  <div class="form-group text-center">
+    <label for="exampleInputPassword1">Password</label>
+    <input ngDefaultControl matInput [formControl]="passwordForm" [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required name="password">
+    <mat-error *ngIf="passwordForm.invalid && passwordForm.touched">{{getPasswordErrors()}}</mat-error>
+  </div>
+  <div class="form-group text-center">
+    <label matInput  for="exampleInputPassword1">Password</label>
+    <input ngDefaultControl [formControl]="passwordForm" [(ngModel)]="password2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirmation password" name="password2" required>
+    <mat-error *ngIf="password!=password2 &&passwordForm.touched">{{getPasswordErrors()}}</mat-error>
+  </div>
+  <button type="submit" [disabled]="usernameForm.invalid||passwordForm.invalid" (click)="onRegister()" class="btn btn-dark my-3 w-100">Register</button>
+  <h5 class="text-center">I have an account</h5>
+  <button routerLink="/home"  type="submit" class="btn btn-dark my-3 w-100">Login</button>
+</div>
+</div>

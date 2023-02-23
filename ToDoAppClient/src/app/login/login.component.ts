@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {LoginService} from "../../services/login.service";
 import {ILoginForm} from "../../models/ILoginForm";
 import {Router} from "@angular/router";
+import {MessageService} from "../../services/message.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent{
   username: any;
 
 
-  constructor(private loginService:LoginService, private router:Router) {
+  constructor(private loginService:LoginService, private router:Router, private message:MessageService) {
   }
 
   onSubmit() {
@@ -28,11 +29,12 @@ export class LoginComponent{
         localStorage.setItem('username',obj.username)
         console.log('dobre')
         this.router.navigateByUrl("todo")
+        this.message.successMessage("Successfully loged in")
       }
       else{
-        console.log('balamuta')
       }
     })
+    this.message.errorMessage("Wrong username or password")
     console.log(obj)
 
 

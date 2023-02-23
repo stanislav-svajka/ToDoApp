@@ -7,5 +7,8 @@
     <label for="exampleInputPassword1">Password</label>
     <input [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
-  <button (click)="onSubmit()" type="submit" class="btn btn-dark my-3 w-100">Submit</button>
+  <button (click)="onSubmit()" type="submit" class="btn btn-dark my-3 w-100">Login</button>
+  <h5 class="text-center">Dont have account?</h5>
+  <button routerLink="/register"  type="submit" class="btn btn-dark my-3 w-100">Register</button>
+
 </div>
