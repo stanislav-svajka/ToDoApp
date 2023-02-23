@@ -16,5 +16,5 @@ public interface ITaskService
 
     Task<bool> CreateAsync(TaskModel taskModel);
 
-    Task<bool> UpdateAsync(TaskDto taskDto);
+    Task<bool> UpdateAsync(int taskId , TaskDto taskDto);
 }

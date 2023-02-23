@@ -90,10 +90,12 @@ public class TaskController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateAsync(
-        [Required, FromBody, Bind] TaskDto taskDto
+        
+        [Required,FromRoute(Name = "task_id")]int taskId,
+        [Required, FromBody] TaskDto taskDto
     )
     {
-        var task = await _taskService.UpdateAsync(taskDto);
+        var task = await _taskService.UpdateAsync(taskId,taskDto);
         return Ok(task);
     }
     
