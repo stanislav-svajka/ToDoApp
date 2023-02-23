@@ -11,6 +11,10 @@
     <input matInput [(ngModel)]="data.etask.description" >
   </mat-form-field>
 
+<div>
+  <mat-checkbox name="isCompleted" [checked]="data.etask.isCompleted" (click)="isCompleted" [(ngModel)]="isCompleted" class="example-margin"></mat-checkbox>
+</div>
+
 <div mat-dialog-actions class="row">
   <div class="col-6">
     <button mat-button (click)="onNoClick()">Cancel</button>

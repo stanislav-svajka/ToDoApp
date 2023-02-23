@@ -34,13 +34,19 @@ export class TodoComponent implements OnInit{
         }
       }
     });
+    dialogRef.afterClosed().subscribe(()=>{
+      this.getAllTasks()
+    })
   }
 
   addTask(etask:ITask){
     this.taskObj.username=this.username
     etask.group='work'
-    etask.isCompleted=false
+    etask.isCompleted=true
     etask.userId=this.userId
+    if(etask.title===this.taskObj.title){
+      this.message.errorMessage("This task already exists")
+    }
     this.taskService.addTask(etask).subscribe((res: any)=>{
       console.log(res)
       this.getAllTasks()

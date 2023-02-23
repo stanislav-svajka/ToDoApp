@@ -24,7 +24,7 @@
     <input ngDefaultControl [formControl]="passwordForm" [(ngModel)]="password2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirmation password" name="password2" required>
     <mat-error *ngIf="password!=password2 &&passwordForm.touched">{{getPasswordErrors()}}</mat-error>
   </div>
-  <button type="submit"  (click)="onRegister()" class="btn btn-dark my-3 w-100">Register</button>
+  <button type="submit" [disabled]="usernameForm.invalid||passwordForm.invalid" (click)="onRegister()" class="btn btn-dark my-3 w-100">Register</button>
   <h5 class="text-center">I have an account</h5>
   <button routerLink="/home"  type="submit" class="btn btn-dark my-3 w-100">Login</button>
 </div>

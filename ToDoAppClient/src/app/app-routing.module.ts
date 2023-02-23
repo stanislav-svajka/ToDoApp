@@ -4,6 +4,7 @@ import { RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {TodoComponent} from "./todo/todo.component";
 import {RegisterComponent} from "./register/register.component";
+import {ServicesGuard} from "../services/auth/services.guard";
 
 const routes:Routes=[
   {
@@ -17,7 +18,7 @@ const routes:Routes=[
   },
   {
     path:"todo",
-    component:TodoComponent
+    component:TodoComponent,canActivate:[ServicesGuard]
   },
   {
     path:"register",

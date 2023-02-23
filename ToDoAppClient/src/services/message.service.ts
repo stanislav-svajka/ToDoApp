@@ -13,7 +13,9 @@ export class MessageService {
   }
 
   errorMessage(message:string, duration:number = 5000) {
-    this.snackBar.open(message, 'ERROR', {duration});
+    this.snackBar.open(message, 'ERROR', {duration,verticalPosition:'top',
+      horizontalPosition: 'center',
+      panelClass: 'my-custom-snackbar',});
   }
 
 }
