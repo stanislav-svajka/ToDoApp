@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ITask} from "../../models/ITask";
 import {TaskService} from "../../services/task.service";
+import {MatDialog} from "@angular/material/dialog";
+import {EditTaskComponent} from "../edit-task/edit-task.component";
 
 
 @Component({
@@ -15,17 +17,34 @@ export class TodoComponent implements OnInit{
   username: string = '';
   userId: number = 0
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private dialog:MatDialog) {
+  }
+
+  openDialog(etask:ITask)
+  {
+    let dialogRef = this.dialog.open(EditTaskComponent, {
+      height: '400px',
+      width: '600px',
+      data:{
+        etask:{
+          title:etask.title,
+          description:etask.description,
+          id:etask.id
+        }
+      }
+    });
   }
 
   addTask(etask:ITask){
     this.taskObj.username=this.username
-    etask.group='dsdsds'
+    etask.group='work'
     etask.isCompleted=false
     etask.userId=this.userId
     this.taskService.addTask(etask).subscribe((res: any)=>{
       console.log(res)
       this.getAllTasks()
+      this.taskObj.title=""
+      this.taskObj.description=""
     })
   }
 

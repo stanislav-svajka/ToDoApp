@@ -1,0 +1,22 @@
+<div class="text-center">
+  <h1 mat-dialog-title>Here you can edit Task</h1>
+  <p></p>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="data.etask.title">
+  </mat-form-field>
+<p></p>
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="data.etask.description" >
+  </mat-form-field>
+
+<div mat-dialog-actions class="row">
+  <div class="col-6">
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </div>
+  <div class="col-6">
+    <button mat-button (click)="updateTask(data.etask)">Submit</button>
+  </div>
+</div>
+</div>

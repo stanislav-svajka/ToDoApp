@@ -5,7 +5,6 @@ export interface ITask {
   userId:number
   isCompleted:boolean
   group:string
-
   id:number
 
 }

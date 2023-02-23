@@ -19,6 +19,9 @@ import {MatFormFieldControl, MatFormFieldModule} from "@angular/material/form-fi
 import {MatCardModule} from "@angular/material/card";
 import {FooterComponent} from "./footer/footer.component";
 import {BannerComponent} from "./banner/banner.component";
+import { EditTaskComponent } from './edit-task/edit-task.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import {BannerComponent} from "./banner/banner.component";
     HomeComponent,
     LoginComponent,
     TodoComponent,
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,8 @@ import {BannerComponent} from "./banner/banner.component";
     AppRoutingModule,
     MatCheckboxModule,
     MatCardModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
