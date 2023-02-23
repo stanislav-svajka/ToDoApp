@@ -3,6 +3,8 @@ using ToDoAppBE.Database;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
 using ToDoAppBE.Model;
+using ToDoAppBE.Repository;
+using ToDoAppBE.Repository.IRepository;
 using ToDoAppBE.Services.Interfaces;
 
 namespace ToDoAppBE.Services;
@@ -10,48 +12,45 @@ namespace ToDoAppBE.Services;
 public class TaskService : ITaskService
 {
     private readonly ApplicationContext _context;
+    private readonly ITaskRepository _taskRepository;
 
-    public TaskService(ApplicationContext context)
+    public TaskService(ApplicationContext context, ITaskRepository taskRepository)
     {
+        _taskRepository = taskRepository;
         _context = context;
     }
     
     public async Task<List<TaskDto>> GetAllAsync()
     {
-        var items = await _context.Tasks.AsNoTracking().ToListAsync();
+        var entities = await _taskRepository.GetAllTasksEntities();
         
-        if (items == null)
+        if (entities == null)
         {
             throw new Exception("Tasks not found");
         }
-
-        var tasks = items.Select(x => x.ToDto()).ToList();
-
-        return tasks;
+        var result = entities.Select(x => x.ToDto()).ToList();
+        
+        return result;
     }
 
     public async Task<List<TaskEntity>> GetTaskByUserIdAsync(string username)
     {
-
-        var user = await _context.Users
-            .Include(x => x.Tasks)
-            .SingleOrDefaultAsync(x => x.Username == username);
+        var user = await _taskRepository.GetUserByName(username);
         
         if (user == null)
         {
             throw new Exception("Tasks not found");
         }
-
-        var tasks = user.Tasks;
         
+        var tasks = user.Tasks;
         return tasks;
     }
 
     public async Task<List<TaskDto>> GetByGroupAsync(string group)
     {
         var correctGroup = group.ToLower();
-        
-        var items = await _context.Tasks.AsNoTracking().Where(x=>x.Group == correctGroup).ToListAsync();
+
+        var items = await _taskRepository.GetTaskByGroup(correctGroup);
         
         if (items == null)
         {
@@ -59,7 +58,7 @@ public class TaskService : ITaskService
         }
         
         var dtos = items.Select(x => x.ToDto()).ToList();
-
+        
         return dtos;
     }
 
@@ -78,11 +77,6 @@ public class TaskService : ITaskService
 
     public async Task<bool> CreateAsync(TaskModel taskModel)
     {
-        if (await _context.Tasks.AnyAsync(x => x.Title == taskModel.Title))
-        {
-            throw new Exception($"Product with name {taskModel.Title} already exists");
-        }
-
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskModel.UserId);
         
         
@@ -97,8 +91,8 @@ public class TaskService : ITaskService
             UserEntity = user,
         };
 
-        await _context.Tasks.AddAsync(task);
-        await _context.SaveChangesAsync();
+        await _context.Tasks.AddAsync(task); // repo
+        await _context.SaveChangesAsync(); // repo
         return true;
     }
 
