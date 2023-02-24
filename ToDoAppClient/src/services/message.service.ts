@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
@@ -6,16 +6,21 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class MessageService {
 
-  constructor(private snackBar: MatSnackBar) { }
-
-  successMessage(message:string, duration:number = 5000) {
-    this.snackBar.open(message, 'SUCCESS', {duration});
+  constructor(private snackBar: MatSnackBar) {
   }
 
-  errorMessage(message:string, duration:number = 5000) {
-    this.snackBar.open(message, 'ERROR', {duration,verticalPosition:'top',
-      horizontalPosition: 'center',
-      panelClass: 'my-custom-snackbar',});
+  successMessage(message: string, duration: number = 5000) {
+    this.snackBar.open(message, 'SUCCESS', {
+      duration,
+      verticalPosition:'top'
+    });
+  }
+
+  errorMessage(message: string, duration: number = 5000) {
+    this.snackBar.open(message, 'ERROR', {
+      duration,
+      verticalPosition:'top',
+    });
   }
 
 }

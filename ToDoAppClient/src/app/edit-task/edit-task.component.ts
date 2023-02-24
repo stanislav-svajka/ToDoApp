@@ -14,17 +14,11 @@ export class EditTaskComponent implements OnInit{
 
   username:string=''
 
-
-
-  isCompleted=false
   constructor(private taskService:TaskService, @Inject(MAT_DIALOG_DATA) public data:IDialog,private dialog:MatDialog, private message:MessageService) {
 }
-
   updateTask(etask:ITask){
     etask.group='dsdsds'
     etask.userId=1
-    etask.isCompleted=this.isCompleted
-
     console.log(etask)
     this.taskService.updateTask(etask).subscribe(()=>{
     })

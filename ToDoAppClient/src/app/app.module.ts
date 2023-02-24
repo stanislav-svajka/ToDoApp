@@ -24,6 +24,9 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         RouterOutlet,
         RouterLink,
         FormsModule,
+      CommonModule,
         HttpClientModule,
         MatInputModule,
         MatIconModule,
@@ -53,7 +57,10 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatButtonModule,
         MatSnackBarModule,
         ReactiveFormsModule,
-      AppRoutingModule
+      MatDatepickerModule,
+      MatNativeDateModule,
+        AppRoutingModule,
+
     ],
   providers: [],
   bootstrap: [AppComponent]

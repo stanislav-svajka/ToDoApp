@@ -8,7 +8,7 @@ public class TaskModel
     
     // public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
     
-    //public DateTime? Expirationtime { get; set; }
+    public DateTime? Expirationtime { get; set; }
 
     public string Description { get; set; }
     

@@ -83,7 +83,7 @@ public class TaskService : ITaskService
         var task = new TaskEntity
         {
             //Id = taskModel.Id,
-            //ExpirationTime = taskModel.Expirationtime,
+            ExpirationTime = taskModel.Expirationtime,
             Description = taskModel.Description,
             Group = taskModel.Group,
             isCompleted = taskModel.isCompleted,
@@ -105,10 +105,10 @@ public class TaskService : ITaskService
             throw new Exception("Empty");
         }
 
-        if (await  _context.Tasks.AnyAsync(x=>x.Title == taskDto.Title && x.Id != taskDto.UserId))
-        {
-            throw new Exception("Already exist !");
-        }
+        // if (await  _context.Tasks.AnyAsync(x=>x.Title == taskDto.Title && x.Id != taskDto.UserId))
+        // {
+        //     throw new Exception("Already exist !");
+        // }
 
         //task.Id = taskDto.Id;
         task.Title = taskDto.Title;
