@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ToDoAppBE.Database;
+using ToDoAppBE.Repository;
+using ToDoAppBE.Repository.IRepository;
 using ToDoAppBE.Services;
 using ToDoAppBE.Services.Interfaces;
 
@@ -47,8 +49,10 @@ namespace ToDoAppBE.DependencyInjection
 
         private static void AddServices(IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ITaskService, TaskService>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITaskService, TaskService>();
+            
         }
 
         #region Infrastructure
