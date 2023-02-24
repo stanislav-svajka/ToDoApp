@@ -4,8 +4,8 @@ export interface ITask {
   username:string
   userId:number
   isCompleted:boolean
+  expirationTime:Date
   group:string
-
   id:number
 
 }

@@ -68,7 +68,7 @@ public class TaskController : ControllerBase
     )
     { 
         await _taskService.DeleteByIdAsync(taskId);
-        return Ok("delete successful");
+        return Ok();
     }
 
     [Authorize]

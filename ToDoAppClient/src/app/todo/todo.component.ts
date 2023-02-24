@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ITask} from "../../models/ITask";
 import {TaskService} from "../../services/task.service";
+import {MatDialog} from "@angular/material/dialog";
+import {EditTaskComponent} from "../edit-task/edit-task.component";
+import {MessageService} from "../../services/message.service";
 
 
 @Component({
@@ -8,56 +11,99 @@ import {TaskService} from "../../services/task.service";
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css']
 })
-export class TodoComponent implements OnInit{
+export class TodoComponent implements OnInit {
 
-  taskObj={} as ITask
-  taskArr:ITask[]=[];
+  taskObj = {} as ITask
+  taskArr: ITask[] = [];
   username: string = '';
   userId: number = 0
+  today = new Date('M/d/yy')
 
-  constructor(private taskService: TaskService) {
+  // isOverDue:boolean=false
+
+  constructor(private taskService: TaskService, private dialog: MatDialog, private message: MessageService) {
   }
 
-  addTask(etask:ITask){
-    this.taskObj.username=this.username
-    etask.group='dsdsds'
-    etask.isCompleted=false
-    etask.userId=this.userId
-    this.taskService.addTask(etask).subscribe((res: any)=>{
-      console.log(res)
+
+  openDialog(etask: ITask) {
+    let dialogRef = this.dialog.open(EditTaskComponent, {
+      height: '400px',
+      width: '600px',
+      data: {
+        etask: {
+          title: etask.title,
+          description: etask.description,
+          id: etask.id,
+          isCompleted: etask.isCompleted,
+          expirationTime: etask.expirationTime
+        }
+      }
+    });
+    dialogRef.afterClosed().subscribe(() => {
       this.getAllTasks()
     })
   }
 
-  getUserId():number
-  {
-    this.taskService.getId(this.username).subscribe((res:number) =>{
-      this.userId=res
-    } )
+  addTask(etask: ITask) {
+    this.taskObj.username = this.username
+    etask.group = this.taskObj.group
+    etask.isCompleted = false
+    etask.userId = this.userId
+    etask.expirationTime = this.taskObj.expirationTime
+    console.log(this.taskObj.expirationTime)
+    if (etask.title === this.taskObj.title) {
+      this.message.errorMessage("This task already exists")
+    }
+    this.taskService.addTask(etask).subscribe((res: any) => {
+      console.log(res)
+      this.getAllTasks()
+      this.taskObj.title = ""
+      this.taskObj.description = ""
+      this.taskObj.group = ""
+      this.message.successMessage("Task successfully added")
+    })
+  }
+
+  getUserId(): number {
+    this.taskService.getId(this.username).subscribe((res: number) => {
+      this.userId = res
+    })
     console.log(this.username)
     console.log(this.userId)
     return this.userId
   }
 
-  getAllTasks(){
-    this.taskService.getAllTasks(this.username).subscribe((res:ITask[])=>{
-      this.taskArr=res;
+  getAllTasks() {
+    this.taskService.getAllTasks(this.username).subscribe((res: ITask[]) => {
+      this.taskArr = res;
       console.log(this.taskArr)
     })
   }
 
-  removeTask(etask:ITask){
+  removeTask(etask: ITask) {
     console.log(etask)
-    this.taskService.removeTask(etask).subscribe(()=>{
+    this.taskService.removeTask(etask).subscribe(() => {
       this.getAllTasks()
+      this.message.successMessage("Task successfully removed")
     })
   }
 
   ngOnInit(): void {
-    this.username=localStorage.getItem("username")!
+    this.username = localStorage.getItem("username")!
     this.getUserId()
     this.taskObj = {} as ITask
     this.getAllTasks()
+    console.log(this.today.getUTCDate())
+
   }
+
+  // isOverDue(time:Date){
+  //   console.log(time.getMonth())
+  //   console.log(this.today.getMilliseconds())
+  //   console.log(time<this.today)
+  //   if(!time) return false;
+  //   if(time<this.today) return true;
+  //   return false
+  // }
 
 }
