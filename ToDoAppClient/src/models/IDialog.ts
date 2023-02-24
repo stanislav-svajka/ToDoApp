@@ -11,6 +11,7 @@ export interface IDialogResult{
   isCompleted:boolean
   group:string
   id:number
+  expirationTime:Date
 
 }
 

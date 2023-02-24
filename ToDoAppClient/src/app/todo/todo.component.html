@@ -1,33 +1,60 @@
-<h1 class="text-6xl font-bold text-center m-5" >Here you can write your Tasks</h1>
+<h1 class="text-6xl font-bold text-center m-5">My Tasks</h1>
 
-<form class="example-form text-center mt-5 flex-column flex ">
+<form class="example-form text-center mt-5 flex-column flex">
   <mat-form-field class="example-full-width w-25 p-3 h-75">
-    <mat-label>Task</mat-label>
-    <input matInput [(ngModel)]="taskObj.title" name="#title" maxlength="256" placeholder="Type your task">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="taskObj.title" name="#title" maxlength="256" placeholder="Type your title">
   </mat-form-field>
   <mat-form-field class="example-full-width w-25 p-3 h-75 ">
     <mat-label>Description</mat-label>
     <input [(ngModel)]="taskObj.description" name="#description" matInput placeholder="Type your description">
   </mat-form-field>
+  <mat-form-field class="example-full-width w-25 p-3 h-75 ">
+    <mat-label>Group</mat-label>
+    <input [(ngModel)]="taskObj.group" name="#group" matInput placeholder="Type your group">
+  </mat-form-field>
+  <!--    <mat-form-field class="example-full-width w-25 p-3 h-75 ">-->
+  <!--      <mat-label>ExpTime</mat-label>-->
+  <!--      <input [(ngModel)]="taskObj.expirationTime" name="#expirationTime" matInput placeholder="ExpirationTime">-->
+  <!--    </mat-form-field>-->
+
+  <mat-form-field class="example-full-width w-25 p-3 h-75 ">
+    <mat-label>Choose a date</mat-label>
+    <input [(ngModel)]="taskObj.expirationTime" name="#expirationTime" matInput placeholder="ExpirationTime"
+           [matDatepicker]="picker">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+ 
+
   <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="note_add"
             (click)="addTask(taskObj)"></mat-icon>
-
 </form>
 
 <div class="w-75 mx-auto">
   <div class="row">
-
+    <mat-label>Completed</mat-label>
     <ng-container *ngFor="let task of taskArr">
       <mat-card>
         <mat-card-content>
           <div class="row">
-          <span class="col-4">{{task.title}}</span>
-          <span class="col-6">{{task.description}}</span>
-          <span class="col-2">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="openDialog(task)"></mat-icon>
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="cancel" (click)="removeTask(task)"></mat-icon>
+            <span class="col-1">
+            <mat-icon *ngIf="task.isCompleted?true:false">check_circle</mat-icon>
+              <!--            <mat-checkbox disabled name="isCompleted" [(ngModel)]="task.isCompleted"-->
+              <!--                          class="example-margin"></mat-checkbox>-->
+                          <mat-icon *ngIf="task.isCompleted?false:true">remove_circle</mat-icon>
+            </span>
+            <span class="col-3">{{task.title}}</span>
+            <span class="col-4">{{task.description}}</span>
+            <span class="col-2">{{task.group}}</span>
+            <span class="col-1">{{task.expirationTime|date:'d.M.yy'}}</span>
+            <span class="col-1">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"
+                  (click)="openDialog(task)"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="cancel"
+                  (click)="removeTask(task)"></mat-icon>
       </span>
-  </div>
+          </div>
         </mat-card-content>
       </mat-card>
     </ng-container>

@@ -33,11 +33,11 @@ username:string=''
 
   getPasswordErrors(){
     if(this.password!=this.password2)
-      return 'password doesnt match'
+      return 'Passwords doesnt match'
 
-    if(this.passwordForm.hasError('passwords doesnt match'))
+    if(this.passwordForm.hasError('Passwords doesnt match'))
     {
-      return 'wrong password'
+      return 'Wrong password'
     }
     return null
   }
