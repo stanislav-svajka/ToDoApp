@@ -8,7 +8,7 @@ public interface ITaskRepository
 {
     Task<List<TaskEntity>> GetAllTasksEntities();
 
-    Task<UserEntity> GetUserByName(string username);
+    Task<UserEntity> GetTaskByUserName(string username);
 
     Task<List<TaskEntity>> GetTaskByGroup(string group);
 
