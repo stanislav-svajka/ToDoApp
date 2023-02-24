@@ -12,6 +12,16 @@ public interface ITaskRepository
 
     Task<List<TaskEntity>> GetTaskByGroup(string group);
 
-    Task DeleteById(int id);
+    Task<TaskEntity> GetTaskById(int id);
+
+    Task<UserEntity> GetUserByTask(TaskModel taskModel);
+
+    Task AddTask(TaskEntity task);
+
+    Task RemoveTask(TaskEntity taskEntity);
+
+    Task SaveChange();
+
+    Task UpdateTask(TaskEntity taskEntity);
 
 }

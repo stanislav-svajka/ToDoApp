@@ -41,10 +41,36 @@ public class TaskRepository: ITaskRepository
         return items;
     }
 
-    public async Task DeleteById(int id)
+    public async Task<TaskEntity>  GetTaskById(int id)
     {
-        
+        var item = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == id);
+        return item;
     }
-    
-    
+
+    public async Task<UserEntity> GetUserByTask(TaskModel taskModel)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskModel.UserId);
+
+        return user;
+    }
+
+    public async Task AddTask(TaskEntity task)
+    {
+        await _context.Tasks.AddAsync(task);
+    }
+
+    public async Task RemoveTask(TaskEntity taskEntity)
+    {
+        _context.Tasks.Remove(taskEntity);
+    }
+
+    public async Task SaveChange()
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateTask(TaskEntity taskEntity)
+    { 
+        _context.Tasks.Update(taskEntity);
+    }
 }

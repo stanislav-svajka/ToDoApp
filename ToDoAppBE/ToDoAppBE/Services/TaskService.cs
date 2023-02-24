@@ -11,13 +11,13 @@ namespace ToDoAppBE.Services;
 
 public class TaskService : ITaskService
 {
-    private readonly ApplicationContext _context;
+   
     private readonly ITaskRepository _taskRepository;
 
-    public TaskService(ApplicationContext context, ITaskRepository taskRepository)
+    public TaskService(ITaskRepository taskRepository)
     {
         _taskRepository = taskRepository;
-        _context = context;
+       
     }
     
     public async Task<List<TaskDto>> GetAllAsync()
@@ -64,26 +64,24 @@ public class TaskService : ITaskService
 
     public async Task DeleteByIdAsync(int id)
     {
-        var item = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == id);
+        var item = await _taskRepository.GetTaskById(id);
         
         if (item == null)
         {
             throw new Exception("Task not found");
         }
 
-        _context.Tasks.Remove(item);
-        await _context.SaveChangesAsync();
+        await _taskRepository.RemoveTask(item);
+        await _taskRepository.SaveChange();
     }
 
     public async Task<bool> CreateAsync(TaskModel taskModel)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == taskModel.UserId);
+        var user = await _taskRepository.GetUserByTask(taskModel);
         
         
         var task = new TaskEntity
         {
-            //Id = taskModel.Id,
-            ExpirationTime = taskModel.Expirationtime,
             Description = taskModel.Description,
             Group = taskModel.Group,
             isCompleted = taskModel.isCompleted,
@@ -91,34 +89,28 @@ public class TaskService : ITaskService
             UserEntity = user,
         };
 
-        await _context.Tasks.AddAsync(task); // repo
-        await _context.SaveChangesAsync(); // repo
+        await _taskRepository.AddTask(task);
+        await _taskRepository.SaveChange();
         return true;
     }
 
     public async Task<bool> UpdateAsync( int taskId ,TaskDto taskDto)
     {
-        var task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == taskId);
+        var task = await _taskRepository.GetTaskById(taskId);
 
         if (task == null)
         {
-            throw new Exception("Empty");
+            throw new Exception("Task not found");
         }
-
-        // if (await  _context.Tasks.AnyAsync(x=>x.Title == taskDto.Title && x.Id != taskDto.UserId))
-        // {
-        //     throw new Exception("Already exist !");
-        // }
-
-        //task.Id = taskDto.Id;
+        
         task.Title = taskDto.Title;
         task.Description = taskDto.Description;
         task.Group = taskDto.Group;
         task.isCompleted = taskDto.isCompleted;
         task.ExpirationTime = taskDto.Expirationtime;
 
-        _context.Tasks.Update(task);
-        await _context.SaveChangesAsync();
+        await _taskRepository.UpdateTask(task);
+        await _taskRepository.SaveChange();
         return true;
     }
 }
