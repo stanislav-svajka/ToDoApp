@@ -52,7 +52,7 @@ namespace ToDoAppBE.DependencyInjection
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITaskService, TaskService>();
-            
+            services.AddScoped<IUserRepository,UserRepository>();
         }
 
         #region Infrastructure
