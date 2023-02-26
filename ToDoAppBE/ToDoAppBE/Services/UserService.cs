@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ToDoAppBE.Database;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Exceptions;
 using ToDoAppBE.Services.Interfaces;
 
 namespace ToDoAppBE.Services;
@@ -25,7 +26,7 @@ public class UserService : IUserService
     {
         if (await UserExist(user.Username))
         {
-            throw new Exception("user already exist");
+            throw new BadRequestException($"User : {user.Username} already exist !");
         }
 
         CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -45,12 +46,12 @@ public class UserService : IUserService
 
         if (user is null)
         {
-            throw new Exception("neexistuje");
+            throw new NotFoundException($"Username : {username} not exist !");
         }
 
         if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
         {
-            throw new Exception("bad password");
+            throw new UnauthorizedException($"Combination username : {username} and password : {password} is incorrect !");
         }
 
         return CreateToken(user);
@@ -72,9 +73,9 @@ public class UserService : IUserService
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
         
-        if (user == null)
+        if (user is null)
         {
-            throw new Exception("User not exist");
+            throw new NotFoundException($"Username : {username} not exist !");
         }
         
         var userId = user.Id;
