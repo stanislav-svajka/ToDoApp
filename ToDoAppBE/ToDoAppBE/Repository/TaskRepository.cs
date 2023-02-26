@@ -26,7 +26,7 @@ public class TaskRepository: ITaskRepository
         return entities;
     }
 
-    public async Task<UserEntity> GetUserByName(string username)
+    public async Task<UserEntity> GetTaskByUserName(string username)
     {
         var user = await _context.Users
             .Include(x => x.Tasks)

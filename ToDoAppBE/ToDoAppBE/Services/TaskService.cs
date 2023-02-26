@@ -35,7 +35,7 @@ public class TaskService : ITaskService
 
     public async Task<List<TaskEntity>> GetTaskByUserIdAsync(string username)
     {
-        var user = await _taskRepository.GetUserByName(username);
+        var user = await _taskRepository.GetTaskByUserName(username);
         
         if (user == null)
         {
@@ -82,6 +82,7 @@ public class TaskService : ITaskService
         
         var task = new TaskEntity
         {
+            ExpirationTime = taskModel.Expirationtime,
             Description = taskModel.Description,
             Group = taskModel.Group,
             isCompleted = taskModel.isCompleted,
