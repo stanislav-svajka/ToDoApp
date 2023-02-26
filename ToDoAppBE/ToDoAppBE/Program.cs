@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using ToDoAppBE.Database;
 using ToDoAppBE.DependencyInjection;
 using System.Text.Json.Serialization;
+using ToDoAppBE.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,5 +74,12 @@ app.MapControllers();
 await using var scope = app.Services.CreateAsyncScope();
 using var db = scope.ServiceProvider.GetService<ApplicationContext>();
 await db.Database.MigrateAsync();
+
+var taskRepository = scope.ServiceProvider.GetService<TaskRepository>(); 
+if (taskRepository != null)
+{
+    var dailyTaskScheduler = new DailyTaskSchedulerAsync(taskRepository);
+    await dailyTaskScheduler.StartAsync();
+}
 
 app.Run();
