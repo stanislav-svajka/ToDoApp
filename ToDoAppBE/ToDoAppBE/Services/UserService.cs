@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using ToDoAppBE.Database;
 using ToDoAppBE.Entities;
 using ToDoAppBE.Exceptions;
+using ToDoAppBE.Repository.IRepository;
 using ToDoAppBE.Services.Interfaces;
 
 namespace ToDoAppBE.Services;
@@ -13,13 +14,15 @@ namespace ToDoAppBE.Services;
 public class UserService : IUserService
 {
     
-    private readonly ApplicationContext _context;
+   
     private readonly IConfiguration _configuration;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(ApplicationContext context, IConfiguration configuration)
+    public UserService( IConfiguration configuration, IUserRepository userRepository)
     {
-        _context = context;
+        
         _configuration = configuration;
+        _userRepository = userRepository;
     }
 
     public async Task<int> Register(UserEntity user, string password)
@@ -33,16 +36,16 @@ public class UserService : IUserService
 
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
-
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
+        
+        await _userRepository.AddUser(user);
+        await _userRepository.SaveChange();
+        
         return user.Id;
     }
 
     public async Task<string> Login(string username, string password)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
+        var user = await _userRepository.GetUserByName(username);
 
         if (user is null)
         {
@@ -59,7 +62,7 @@ public class UserService : IUserService
 
     public async Task<bool> UserExist(string username)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+        var user = await _userRepository.GetUserByName(username);
 
         if (user is null)
         {
@@ -71,7 +74,7 @@ public class UserService : IUserService
 
     public async Task<int> GetUserIdByName(string username)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+        var user = await _userRepository.GetUserByName(username);
         
         if (user is null)
         {
