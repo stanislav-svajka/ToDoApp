@@ -2,6 +2,7 @@
 using ToDoAppBE.Database;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Exceptions;
 using ToDoAppBE.Model;
 using ToDoAppBE.Repository;
 using ToDoAppBE.Repository.IRepository;
@@ -26,7 +27,7 @@ public class TaskService : ITaskService
         
         if (entities == null)
         {
-            throw new Exception("Tasks not found");
+            throw new NotFoundException($"Tasks not found");
         }
         var result = entities.Select(x => x.ToDto()).ToList();
         
@@ -39,7 +40,7 @@ public class TaskService : ITaskService
         
         if (user == null)
         {
-            throw new Exception("Tasks not found");
+            throw new NotFoundException($"Tasks not found");
         }
         
         var tasks = user.Tasks;
@@ -54,7 +55,7 @@ public class TaskService : ITaskService
         
         if (items == null)
         {
-            throw new Exception("Tasks not found");
+            throw new NotFoundException($"Tasks not found");
         }
         
         var dtos = items.Select(x => x.ToDto()).ToList();
@@ -68,7 +69,7 @@ public class TaskService : ITaskService
         
         if (item == null)
         {
-            throw new Exception("Task not found");
+            throw new NotFoundException($"Tasks not found");
         }
 
         await _taskRepository.RemoveTask(item);
@@ -101,7 +102,7 @@ public class TaskService : ITaskService
 
         if (task == null)
         {
-            throw new Exception("Task not found");
+            throw new NotFoundException($"Tasks not found");
         }
         
         task.Title = taskDto.Title;
