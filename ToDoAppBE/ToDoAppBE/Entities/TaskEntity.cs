@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ToDoAppBE.DTOs;
 
@@ -13,6 +14,7 @@ public class TaskEntity
     //[ForeignKey("UserEntity")]
     public int UserEntityId { get; set; }
 
+    [JsonIgnore]
     public UserEntity? UserEntity { get; set; }
 
     public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
@@ -27,6 +29,7 @@ public class TaskEntity
     
     public string Group { get; set; }
 
+    
     public TaskDto ToDto()
     {
         return new TaskDto
