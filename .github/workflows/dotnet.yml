@@ -25,10 +25,10 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     - name: Install dependencies
       run: dotnet restore ToDoAppBE.sln
-      working-directory: ./ToDoApp/ToDoAppBE/
+      working-directory: ToDoAppBE/
     - name: Build
       run: dotnet build --configuration Release --no-restore ToDoAppBE.csproj
-      working-directory: ./ToDoApp/ToDoAppBE/ToDoAppBE/
+      working-directory: ToDoAppBE/ToDoAppBE/
     - name: Test
       run: dotnet test --no-restore --verbosity normal ToDoAppTests.csproj
-      working-directory: ./ToDoApp/ToDoAppBE/ToDoAppTests/
+      working-directory: ToDoAppBE/ToDoAppTests/
