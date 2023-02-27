@@ -27,6 +27,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {CommonModule} from "@angular/common";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import {CommonModule} from "@angular/common";
         RouterOutlet,
         RouterLink,
         FormsModule,
-      CommonModule,
+        CommonModule,
         HttpClientModule,
         MatInputModule,
         MatIconModule,
@@ -57,9 +58,10 @@ import {CommonModule} from "@angular/common";
         MatButtonModule,
         MatSnackBarModule,
         ReactiveFormsModule,
-      MatDatepickerModule,
-      MatNativeDateModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         AppRoutingModule,
+        MatSelectModule,
 
     ],
   providers: [],

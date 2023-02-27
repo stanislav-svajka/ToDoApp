@@ -32,9 +32,9 @@ export class LoginComponent{
         this.message.successMessage("Successfully loged in")
       }
       else{
+        this.message.errorMessage("Wrong username or password")
       }
     })
-    this.message.errorMessage("Wrong username or password")
     console.log(obj)
 
 

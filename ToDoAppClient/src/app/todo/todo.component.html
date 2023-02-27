@@ -9,14 +9,24 @@
     <mat-label>Description</mat-label>
     <input [(ngModel)]="taskObj.description" name="#description" matInput placeholder="Type your description">
   </mat-form-field>
-  <mat-form-field class="example-full-width w-25 p-3 h-75 ">
-    <mat-label>Group</mat-label>
-    <input [(ngModel)]="taskObj.group" name="#group" matInput placeholder="Type your group">
-  </mat-form-field>
+<!--  <mat-form-field class="example-full-width w-25 p-3 h-75 ">-->
+<!--    <mat-label>Group</mat-label>-->
+<!--    <input [(ngModel)]="taskObj.group" name="#group" matInput placeholder="Type your group">-->
+<!--  </mat-form-field>-->
   <!--    <mat-form-field class="example-full-width w-25 p-3 h-75 ">-->
   <!--      <mat-label>ExpTime</mat-label>-->
   <!--      <input [(ngModel)]="taskObj.expirationTime" name="#expirationTime" matInput placeholder="ExpirationTime">-->
   <!--    </mat-form-field>-->
+
+  <mat-form-field class="example-full-width w-25 p-3 h-75" >
+    <mat-label>Group</mat-label>
+    <select [(ngModel)]="taskObj.group" name="#group" matNativeControl class="text-center">
+      <option value="work">Work</option>
+      <option value="shopping">Shopping</option>
+      <option value="car">Car</option>
+      <option value="school">School</option>
+    </select>
+  </mat-form-field>
 
   <mat-form-field class="example-full-width w-25 p-3 h-75 ">
     <mat-label>Choose a date</mat-label>
@@ -47,7 +57,7 @@
             <span class="col-3">{{task.title}}</span>
             <span class="col-4">{{task.description}}</span>
             <span class="col-2">{{task.group}}</span>
-            <span class="col-1">{{task.expirationTime|date:'M/d/yy'}}</span>
+            <span [ngClass]="{'color-red':isOverDue(task.expirationTime)}" class="col-1">{{task.expirationTime|date:'M/d/yy'}}</span>
             <span class="col-1">
         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"
                   (click)="openDialog(task)"></mat-icon>
