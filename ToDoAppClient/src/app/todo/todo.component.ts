@@ -35,7 +35,8 @@ export class TodoComponent implements OnInit {
           description: etask.description,
           id: etask.id,
           isCompleted: etask.isCompleted,
-          expirationTime: etask.expirationTime
+          expirationTime: etask.expirationTime,
+          group:etask.group
         }
       }
     });
