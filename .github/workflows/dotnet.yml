@@ -22,8 +22,10 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ToDoAppBE
+      working-directory: ToDoApp\ToDoAppBE\ToDoAppBE
     - name: Build
       run: dotnet build --no-restore
+      working-directory: ToDoApp\ToDoAppBE\ToDoAppBE
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      working-directory: ToDoApp\ToDoAppBEToDoAppTests
