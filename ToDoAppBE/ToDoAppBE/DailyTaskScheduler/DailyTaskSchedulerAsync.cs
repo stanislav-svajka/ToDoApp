@@ -29,8 +29,9 @@ public class DailyTaskSchedulerAsync
                 if (task.isCompleted == true)
                 {
                     await _taskRepository.RemoveTask(task);
-                    await _taskRepository.SaveChange();
+                    
                 }
+                await _taskRepository.SaveChange();
             }
 
         }, null, timeUntilMidnight, TimeSpan.FromHours(24));

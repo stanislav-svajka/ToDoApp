@@ -2,6 +2,7 @@
 using ToDoAppBE.Database;
 using ToDoAppBE.DTOs;
 using ToDoAppBE.Entities;
+using ToDoAppBE.Exceptions;
 using ToDoAppBE.Model;
 using ToDoAppBE.Repository;
 using ToDoAppBE.Repository.IRepository;
@@ -86,6 +87,20 @@ public class TaskServiceTests
         //Assert
         Assert.IsNotEmpty(items);
 
+    }
+
+    [Test]
+    public async Task AddAyinc_TaskNotExist_Badrequest()
+    {
+        //Arrange
+
+        var group = "dusan";
+        var listTaskEntity = new List<TaskEntity>();
+        
+        
+        var task = await _taskRepository.GetTaskByGroup(group);
+
+        Assert.ThrowsAsync<NotFoundException>((() => _taskRepository.GetTaskByGroup(group)));
     }
 
     [Test]
