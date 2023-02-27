@@ -90,48 +90,29 @@ public class TaskServiceTests
     }
 
     [Test]
-    public async Task AddAyinc_TaskNotExist_Badrequest()
+    public async Task DeleteAyinc_TaskNotExist_Badrequest()
     {
-        //Arrange
-
-        var group = "dusan";
-        var listTaskEntity = new List<TaskEntity>();
-        
-        
-        var task = await _taskRepository.GetTaskByGroup(group);
-
-        Assert.ThrowsAsync<NotFoundException>((() => _taskRepository.GetTaskByGroup(group)));
+        Assert.ThrowsAsync<NotFoundException>(() => _taskService.DeleteByIdAsync(1));
     }
 
     [Test]
-    public async Task DeleteFromList()
+    public async Task FindAll_entitiesNotExist_NotFoundException()
     {
-        //Arrange
-        var group = "string";
-        var task0 = new TaskEntity
-        {
-            Id = 1,
-            CreatedTime = DateTime.UtcNow,
-            Description = "string",
-            ExpirationTime = DateTime.UtcNow.AddDays(2),
-            Group = "string",
-            isCompleted = false,
-            Title = "title",
-            UserEntity = new UserEntity(),
-            UserEntityId = 1
-        };
-        List<TaskEntity> taskList = new List<TaskEntity>();
-        
-        taskList.Add(task0);
-        
-        //Act
-        _taskRepository.GetTaskByGroup(group).Returns(Task.FromResult(taskList));
-         
-        var items = await _taskRepository.GetTaskByGroup(group);
-        
-        //Arrange
+        Assert.ThrowsAsync<NotFoundException>(() => _taskService.GetAllAsync());
+    }
+
+    [Test]
+    public async Task FindById_UserTask_notFoundException()
+    {
+        Assert.ThrowsAsync<NotFoundException>(() => _taskService.GetTaskByUserIdAsync("dusan"));
+    }
+
+    [Test]
+    public async Task AddTask()
+    {
         var task = new TaskEntity
         {
+            
             Id = 1,
             CreatedTime = DateTime.UtcNow,
             Description = "string",
@@ -143,15 +124,9 @@ public class TaskServiceTests
             UserEntityId = 1
         };
 
-        //Act
-        var result = _taskRepository.RemoveTask(task).Returns(Task.FromResult(items));
-        
-        //Assert
-        
-        //Assert.IsEmpty(result);
-        
+        await _taskRepository.AddTask(task);
+        Assert.NotNull(()=> _taskRepository.GetTaskById(1));
+
     }
-    
-    
     
 }
