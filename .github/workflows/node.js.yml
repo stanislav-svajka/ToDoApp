@@ -26,6 +26,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install dependencies
+      run: npm install
+      working-directory: ToDoAppClient/
     - run: npm ci
+      working-directory: ToDoAppClient/
     - run: npm run build --if-present
+      working-directory: ToDoAppClient/
 
