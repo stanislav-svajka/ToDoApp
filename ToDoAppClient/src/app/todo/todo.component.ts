@@ -4,7 +4,7 @@ import {TaskService} from "../../services/task.service";
 import {MatDialog} from "@angular/material/dialog";
 import {EditTaskComponent} from "../edit-task/edit-task.component";
 import {MessageService} from "../../services/message.service";
-
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-todo',
@@ -17,8 +17,8 @@ export class TodoComponent implements OnInit {
   taskArr: ITask[] = [];
   username: string = '';
   userId: number = 0
-  today = new Date('M/d/yy')
-
+  today= new Date();
+  tempDate!:Date
   // isOverDue:boolean=false
 
   constructor(private taskService: TaskService, private dialog: MatDialog, private message: MessageService) {
@@ -49,11 +49,7 @@ export class TodoComponent implements OnInit {
     etask.group = this.taskObj.group
     etask.isCompleted = false
     etask.userId = this.userId
-    etask.expirationTime = this.taskObj.expirationTime
-    console.log(this.taskObj.expirationTime)
-    if (etask.title === this.taskObj.title) {
-      this.message.errorMessage("This task already exists")
-    }
+    etask.expirationTime = new Date(this.taskObj.expirationTime.setHours(1))
     this.taskService.addTask(etask).subscribe((res: any) => {
       console.log(res)
       this.getAllTasks()
@@ -93,17 +89,20 @@ export class TodoComponent implements OnInit {
     this.getUserId()
     this.taskObj = {} as ITask
     this.getAllTasks()
-    console.log(this.today.getUTCDate())
-
+    // console.log(this.today+'2')
+    // console.log(this.taskObj.expirationTime+'1')
   }
 
-  // isOverDue(time:Date){
-  //   console.log(time.getMonth())
-  //   console.log(this.today.getMilliseconds())
-  //   console.log(time<this.today)
-  //   if(!time) return false;
-  //   if(time<this.today) return true;
-  //   return false
-  // }
+  isOverDue(time:Date){
+   this.tempDate = new Date(time)
+    // console.log(this.today.getMilliseconds()+'   1')
+    // console.log(this.tempDate.getMilliseconds()+'   2')
+    // console.log(this.tempDate<this.today)
+    if(this.tempDate>this.today)
+      return false;
+    if(this.tempDate<this.today)
+      return true;
+    return false
+  }
 
 }
