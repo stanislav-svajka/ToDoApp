@@ -17,9 +17,7 @@ export class EditTaskComponent implements OnInit{
   constructor(private taskService:TaskService, @Inject(MAT_DIALOG_DATA) public data:IDialog,private dialog:MatDialog, private message:MessageService) {
 }
   updateTask(etask:ITask){
-    etask.group='dsdsds'
-    etask.userId=1
-    console.log(etask)
+    etask.group=this.data.etask.group
     this.taskService.updateTask(etask).subscribe(()=>{
     })
     this.message.successMessage("Successfully updated your task")
@@ -32,6 +30,7 @@ export class EditTaskComponent implements OnInit{
 
 
   ngOnInit(): void {
+    console.log(this.data.etask.group)
   }
 
 }
