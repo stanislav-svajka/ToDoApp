@@ -104,7 +104,7 @@ public class TaskServiceTests
     [Test]
     public async Task FindById_UserTask_notFoundException()
     {
-        Assert.ThrowsAsync<NotFoundException>(() => _taskService.GetTaskByUserIdAsync("dusan"));
+        Assert.ThrowsAsync<NotFoundException>(() => _taskService.GetTaskByUserNameAsync("dusan"));
     }
 
     [Test]

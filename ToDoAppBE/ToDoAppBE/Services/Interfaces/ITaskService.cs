@@ -8,7 +8,7 @@ public interface ITaskService
 {
     Task<List<TaskDto>> GetAllAsync();
 
-    Task<List<TaskEntity>> GetTaskByUserIdAsync(string username);
+    Task<List<TaskEntity>> GetTaskByUserNameAsync(string username);
 
     Task<List<TaskDto>> GetByGroupAsync(string group);
 
