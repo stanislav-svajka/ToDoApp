@@ -34,7 +34,7 @@ public class TaskService : ITaskService
         return result;
     }
 
-    public async Task<List<TaskEntity>> GetTaskByUserIdAsync(string username)
+    public async Task<List<TaskEntity>> GetTaskByUserNameAsync(string username)
     {
         var user = await _taskRepository.GetTaskByUserName(username);
         

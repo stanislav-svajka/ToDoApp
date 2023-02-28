@@ -54,7 +54,7 @@ public class TaskController : ControllerBase
         [Required, FromRoute(Name = "username")] string username
     )
     {
-        var tasks= await _taskService.GetTaskByUserIdAsync(username);
+        var tasks= await _taskService.GetTaskByUserNameAsync(username);
         return Ok(tasks);
     }
 
